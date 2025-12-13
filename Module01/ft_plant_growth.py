@@ -11,7 +11,7 @@ class Plant:
     def grow(self):
         self.height += 1
 
-    def incriase_age(self):
+    def increase_age(self):
         self.age += 1
 
     def get_info(self):
@@ -22,21 +22,22 @@ def ft_plant_growth():
     Plant("Rose", 25, 30)
     Plant("Sunflower", 80, 45)
     start_h = {}
+    time = 7
     print("=== Day 1 ===")
     for i in Plant.plants:
-        Plant.get_info(i)
+        i.get_info()
         start_h[i] = i.height
     for i in Plant.plants:
         day = 1
-        while day < 7:
+        while day < time:
             i.grow()
-            i.incriase_age()
+            i.increase_age()
             day += 1
-    print("=== Day 7 ===")
+    print(f"=== Day {time} ===")
     for i in Plant.plants:
-        Plant.get_info(i)
+        i.get_info()
         growth = i.height - start_h[i]
         print(f"Growth this week: +{growth}cm")
 
-
-ft_plant_growth()
+if __name__ == "__main__":
+	ft_plant_growth()
