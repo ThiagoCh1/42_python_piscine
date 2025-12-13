@@ -6,7 +6,7 @@ class Plant:
         self.name = name
         self.height = height
         self.age = age
-        Plant.plants.append(self)
+        Plant.plants += [self]
 
 
 def ft_garden_data():

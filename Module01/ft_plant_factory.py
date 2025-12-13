@@ -6,7 +6,8 @@ class Plant:
         self.name = name
         self.height = height
         self.age = age
-        Plant.plants.append(self)
+        Plant.plants += [self]
+
 
     def grow(self):
         self.height += 1
@@ -27,10 +28,12 @@ def ft_plant_factory():
 	]
     for i in plant_data:
         Plant(**i)
+    count = 0
     print("=== Plant Factory Output ===")
     for i in Plant.plants:
         print(f"Created: {i.name} ({i.height}cm, {i.age} days)")
-    print(f"Total plants created: {len(Plant.plants)}")
+        count += 1
+    print(f"Total plants created: {count}")
 
 if __name__ == "__main__":
     ft_plant_factory()

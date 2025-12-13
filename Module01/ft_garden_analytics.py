@@ -1,12 +1,10 @@
 class Plant:
-    plants = []
 
     def __init__(self, name, height, age):
 
         self.name = name
         self.height = height
         self.age = age
-        Plant.plants += [self]
 
     def get_info(self):
         print(f"{self.name}: {self.height}cm, {self.age} days old")
@@ -41,21 +39,3 @@ class Vegetable(Plant):
         print(f"{self.name} (Vegetable): {self.height}cm, {self.age} days, {self.harvest_season} harvest")
         print(f"{self.name} is rich in {self.nutritional_value}")
 
-def ft_plant_types():
-    print("=== Garden Plant Types ===")
-
-    Flower("Rose", 25, 30, "red")
-    Flower("Daisy", 12, 14, "white")
-
-    Tree("Oak", 500, 1825, 50)
-    Tree("Maple", 350, 1000, 30)
-
-    Vegetable("Tomato", 80, 90, "summer", "vitamin C")
-    Vegetable("Carrot", 20, 45, "winter", "vitamin A")
-
-    for i in Plant.plants:
-        print()
-        i.get_info()
-
-if __name__ == "__main__":
-    ft_plant_types()
