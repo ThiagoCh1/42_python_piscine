@@ -1,30 +1,84 @@
 class Garden:
-    gardens = []
 
     def __init__(self, name):
         self.name = name
         self.plants = []
-        Garden.gardens += [self]
+        GardenManager.gardens += [self]
+
     def add_plant(self, plant):
         self.plants += [plant]
         print(f"Added {plant.name} to {self.name}'s garden")
-    class Analytics:
+
+
+class GardenManager:
+    gardens = []
+
+    @classmethod
+    def create_garden_network(cls):
+        alice = Garden("Alice")
+        thiago = Garden("Thiago")
+
+        alice.add_plant(Plant("Oak Tree", 100, 5))
+        alice.add_plant(Flowering("Rose", 25, 2, "Red", True))
+        alice.add_plant(PrizeFlower("Sunflower", 50, 20, "Yellow", True))
+        thiago.add_plant(Plant("Oak", 70, 5))
+
+    @staticmethod
+    def new_day():
+        for garden in GardenManager.gardens:
+            for plant in garden.plants:
+                plant.grow()
+                plant.increase_age()
+        print("Its a new day, all the plants grew")
+
+    class GardenStats:
         @staticmethod
-        def calculate_total_plants():
+        def calculate_total_plants(garden):
             count = 0
-            for garden in Garden.gardens:
-                for plant in garden.plants:
-                    count += 1
-            print(f"Total plants: {count}")
+            for plant in garden.plants:
+                count += 1
+            print(f"Total plants in {garden.name}'s garden: {count}")
+
         @staticmethod
         def average_age(garden):
             total_age = 0
             count = 0
+            average = 0
             for plant in garden.plants:
-                total_age += plant.age
+                total_age += plant.get_age()
                 count += 1
-            average = total_age / count
+            if count != 0:
+                average = total_age / count
             print(f"Average age of the garden: {average}")
+
+        @staticmethod
+        def plant_types(garden):
+            r = 0
+            f = 0
+            p = 0
+            for plant in garden.plants:
+                if plant.plant_type() == "Flowering":
+                    f += 1
+                elif plant.plant_type() == "Prize":
+                    p += 1
+                else:
+                    r += 1
+            print(f"Plant types: {r} regular, {f} flowering, {p} prize flowers")
+
+        @staticmethod
+        def garden_score(garden):
+            total = 0
+            for plant in garden.plants:
+                if plant.plant_type() == "Prize":
+                    total += plant.prize_points
+            return total
+
+        @staticmethod
+        def total_gardens():
+            count = 0
+            for garden in GardenManager.gardens:
+                count += 1
+            print(f"Total gardens managed: {count}")
 
 
 class Plant:
@@ -44,7 +98,9 @@ class Plant:
         if new_height >= 0:
             self.__height = new_height
         else:
-            print(f"\nInvalid operation attempted: height {new_height}cm [REJECTED]")
+            text = "\nInvalid operation attempted: " \
+                "height {new_height}cm [REJECTED]"
+            print(f"{text}")
             print("Security: Negative height rejected")
             print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, {self.get_age()} days)")
 
@@ -65,33 +121,79 @@ class Plant:
     def increase_age(self):
         self.__age += 1
 
-class Flower(Plant):
-    def __init__(self, name, height, age, color):
-          super().__init__(name, height, age)
-          self.color = color
-    def bloom(self):
-            print(f"{self.name} is blooming beautifully!")
-    def get_info(self):
-        print(f"{self.name} (Flower): {self.get_height()}cm, {self.get_age()} days, {self.color} color")
-        self.bloom()
+    def plant_type(self):
+        return ("Regular")
 
-class Tree(Plant):
-    def __init__(self, name, height, age, trunk_diameter):
-          super().__init__(name, height, age)
-          self.trunk_diameter = trunk_diameter
-    def produce_shade(self):
-        shade = (self.trunk_diameter * self.trunk_diameter * 3.14) / 100
-        print(f"{self.name} Provides {shade} square meters of shade")
     def get_info(self):
-        print(f"{self.name} (Tree): {self.get_height()}cm, {self.get_age()} days, {self.trunk_diameter}cm diameter")
-        self.produce_shade()
+        print(f"{self.name} (Regular): {self.get_height()}cm, {self.get_age()} days")
 
-class Vegetable(Plant):
-    def __init__(self, name, height, age, harvest_season, nutritional_value):
+
+class Flowering(Plant):
+    def __init__(self, name, height, age, color, is_blooming):
         super().__init__(name, height, age)
-        self.harvest_season = harvest_season
-        self.nutritional_value = nutritional_value
-    def get_info(self):
-        print(f"{self.name} (Vegetable): {self.get_height()}cm, {self.get_age()} days, {self.harvest_season} harvest")
-        print(f"{self.name} is rich in {self.nutritional_value}")
+        self.color = color
+        self.is_blooming = False
 
+    def bloom(self):
+        self.is_blooming = True
+        print(f"{self.name} is blooming beautifully!")
+
+    def stop_bloom(self):
+        self.is_blooming = False
+        print(f"{self.name} isn't blooming")
+
+    def blooming(self):
+        if self.is_blooming:
+            return ("Blooming")
+        else:
+            return ("Not Blooming")
+
+    def plant_type(self):
+        return ("Flowering")
+
+    def get_info(self):
+        print(f"{self.name} (Flowering): {self.get_height()}cm, {self.get_age()} days, {self.color} color ({self.blooming()})")
+
+
+class PrizeFlower(Flowering):
+    def __init__(self, name, height, age, color, is_blooming):
+        super().__init__(name, height, age, color, is_blooming)
+        self.prize_points = self.calculate_prize()
+
+    def calculate_prize(self):
+        points = 0
+        if self.is_blooming:
+            points += 20
+        if self.get_age() <= 30:
+            points += 20
+        if self.get_height() >= 20:
+            points += 20
+        return points
+
+    def plant_type(self):
+        return ("Prize")
+
+    def get_info(self):
+        print(f"{self.name} (PrizeFlower): {self.get_height()}cm, {self.get_age()} days, {self.color} color ({self.blooming()}), {self.prize_points} points")
+
+
+def ft_garden_analytics():
+    print("=== Garden Management System Demo")
+    garden_scores = {}
+    GardenManager.create_garden_network()
+    GardenManager.new_day()
+    for garden in GardenManager.gardens:
+        print(f"=== {garden.name}'s Garden Report ===")
+        print("Plants in garden:")
+        for plant in garden.plants:
+            plant.get_info()
+        GardenManager.GardenStats.calculate_total_plants(garden)
+        GardenManager.GardenStats.average_age(garden)
+        GardenManager.GardenStats.plant_types(garden)
+        garden_scores[garden] = GardenManager.GardenStats.garden_score(garden)
+    formatted_scores = [f"{garden.name}: {score}" for garden, score in garden_scores.items()]
+    print(f"Garden scores - {', '.join(formatted_scores)}")
+    GardenManager.GardenStats.total_gardens()
+
+
+ft_garden_analytics()
