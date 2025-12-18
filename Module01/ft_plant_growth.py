@@ -39,5 +39,6 @@ def ft_plant_growth():
         growth = i.height - start_h[i]
         print(f"Growth this week: +{growth}cm")
 
+
 if __name__ == "__main__":
-	ft_plant_growth()
+    ft_plant_growth()

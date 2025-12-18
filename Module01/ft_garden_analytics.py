@@ -63,7 +63,8 @@ class GardenManager:
                     p += 1
                 else:
                     r += 1
-            print(f"Plant types: {r} regular, {f} flowering, {p} prize flowers")
+            print(f"Plant types: {r} regular, {f} flowering, "
+                  f"{p} prize flowers")
 
         @staticmethod
         def garden_score(garden):
@@ -102,7 +103,8 @@ class Plant:
                 "height {new_height}cm [REJECTED]"
             print(f"{text}")
             print("Security: Negative height rejected")
-            print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, {self.get_age()} days)")
+            print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
+                  f"{self.get_age()} days)")
 
     def get_age(self):
         return self.__age
@@ -111,9 +113,11 @@ class Plant:
         if new_age >= 0:
             self.__age = new_age
         else:
-            print(f"\nInvalid operation attempted: age {new_age} days [REJECTED]")
+            print(f"\nInvalid operation attempted: age {new_age} "
+                  "days [REJECTED]")
             print("Security: Negative age rejected")
-            print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, {self.get_age()} days)")
+            print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
+                  f"{self.get_age()} days)")
 
     def grow(self):
         self.__height += 1
@@ -125,7 +129,8 @@ class Plant:
         return ("Regular")
 
     def get_info(self):
-        print(f"{self.name} (Regular): {self.get_height()}cm, {self.get_age()} days")
+        print(f"{self.name} (Regular): {self.get_height()}cm, "
+              f"{self.get_age()} days")
 
 
 class Flowering(Plant):
@@ -152,7 +157,9 @@ class Flowering(Plant):
         return ("Flowering")
 
     def get_info(self):
-        print(f"{self.name} (Flowering): {self.get_height()}cm, {self.get_age()} days, {self.color} color ({self.blooming()})")
+        print(f"{self.name} (Flowering): {self.get_height()}cm, "
+              f"{self.get_age()} days, {self.color} color "
+              f"({self.blooming()})")
 
 
 class PrizeFlower(Flowering):
@@ -174,7 +181,9 @@ class PrizeFlower(Flowering):
         return ("Prize")
 
     def get_info(self):
-        print(f"{self.name} (PrizeFlower): {self.get_height()}cm, {self.get_age()} days, {self.color} color ({self.blooming()}), {self.prize_points} points")
+        print(f"{self.name} (PrizeFlower): {self.get_height()}cm, "
+              f"{self.get_age()} days, {self.color} color "
+              f"({self.blooming()}), {self.prize_points} points")
 
 
 def ft_garden_analytics():
@@ -191,9 +200,12 @@ def ft_garden_analytics():
         GardenManager.GardenStats.average_age(garden)
         GardenManager.GardenStats.plant_types(garden)
         garden_scores[garden] = GardenManager.GardenStats.garden_score(garden)
-    formatted_scores = [f"{garden.name}: {score}" for garden, score in garden_scores.items()]
+    formatted_scores = [
+        f"{garden.name}: {score}" for garden, score in garden_scores.items()
+    ]
     print(f"Garden scores - {', '.join(formatted_scores)}")
     GardenManager.GardenStats.total_gardens()
 
 
-ft_garden_analytics()
+if __name__ == "__main__":
+    ft_garden_analytics()
