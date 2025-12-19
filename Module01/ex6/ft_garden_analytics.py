@@ -187,12 +187,12 @@ class PrizeFlower(Flowering):
 
 
 def ft_garden_analytics():
-    print("=== Garden Management System Demo")
+    print("=== Garden Management System Demo ===\n")
     garden_scores = {}
     GardenManager.create_garden_network()
     GardenManager.new_day()
     for garden in GardenManager.gardens:
-        print(f"=== {garden.name}'s Garden Report ===")
+        print(f"\n=== {garden.name}'s Garden Report ===\n")
         print("Plants in garden:")
         for plant in garden.plants:
             plant.get_info()
@@ -203,7 +203,7 @@ def ft_garden_analytics():
     formatted_scores = [
         f"{garden.name}: {score}" for garden, score in garden_scores.items()
     ]
-    print(f"Garden scores - {', '.join(formatted_scores)}")
+    print(f"\nGarden scores - {', '.join(formatted_scores)}")
     GardenManager.GardenStats.total_gardens()
 
 

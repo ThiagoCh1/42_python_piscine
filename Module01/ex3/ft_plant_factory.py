@@ -33,7 +33,7 @@ def ft_plant_factory():
     for i in Plant.plants:
         print(f"Created: {i.name} ({i.height}cm, {i.age} days)")
         count += 1
-    print(f"Total plants created: {count}")
+    print(f"\nTotal plants created: {count}")
 
 
 if __name__ == "__main__":
