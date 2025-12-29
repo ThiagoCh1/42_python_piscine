@@ -19,4 +19,5 @@ Communication channels verified")
     print("\nThree-channel communication test successful.")
 
 
-main()
+if __name__ == "__main__":
+    main()

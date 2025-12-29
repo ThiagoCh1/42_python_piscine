@@ -1,15 +1,14 @@
 class Plant:
     plants = []
 
-    def __init__(self, name, height, age):
-
+    def __init__(self, name: str, height: int, age: int) -> None:
         self.name = name
         self.height = height
         self.age = age
         Plant.plants += [self]
 
 
-def ft_garden_data():
+def ft_garden_data() -> None:
     Plant("Rose", 25, 30)
     Plant("Sunflower", 80, 45)
     Plant("Cactus", 15, 120)

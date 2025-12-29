@@ -1,8 +1,7 @@
 class SecurePlant:
     plants = {}
 
-    def __init__(self, name, height, age):
-
+    def __init__(self, name: str, height: int, age: int) -> None:
         self.name = name
         print(f"Plant created: {name}")
         self.__height = 0
@@ -11,10 +10,10 @@ class SecurePlant:
         self.set_age(age)
         SecurePlant.plants[self.name] = self
 
-    def get_height(self):
+    def get_height(self) -> int:
         return self.__height
 
-    def set_height(self, new_height):
+    def set_height(self, new_height: int) -> None:
         if new_height >= 0:
             self.__height = new_height
             print(f"Height updated: {new_height}cm [OK]")
@@ -25,10 +24,10 @@ class SecurePlant:
             print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
                   f"{self.get_age()} days)")
 
-    def get_age(self):
+    def get_age(self) -> int:
         return self.__age
 
-    def set_age(self, new_age):
+    def set_age(self, new_age: int) -> None:
         if new_age >= 0:
             self.__age = new_age
             print(f"Age updated: {new_age} days [OK]")
@@ -39,17 +38,17 @@ class SecurePlant:
             print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
                   f"{self.get_age()} days)")
 
-    def grow(self):
+    def grow(self) -> None:
         self.__height += 1
 
-    def increase_age(self):
+    def increase_age(self) -> None:
         self.__age += 1
 
-    def get_info(self):
+    def get_info(self) -> None:
         print(f"{self.name}: {self.__height}cm, {self.__age} days old")
 
 
-def ft_garden_security():
+def ft_garden_security() -> None:
     print("=== Garden Security System ===")
     SecurePlant("Rose", 25, 30)
     SecurePlant.plants["Rose"].set_height(-5)

@@ -1,11 +1,9 @@
 class Garden:
-
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
         self.plants = []
-        GardenManager.gardens += [self]
 
-    def add_plant(self, plant):
+    def add_plant(self, plant) -> None:
         self.plants += [plant]
         print(f"Added {plant.name} to {self.name}'s garden")
 
@@ -14,9 +12,15 @@ class GardenManager:
     gardens = []
 
     @classmethod
-    def create_garden_network(cls):
-        alice = Garden("Alice")
-        thiago = Garden("Thiago")
+    def create_garden(cls, name: str):
+        garden = Garden(name)
+        cls.gardens += [garden]
+        return garden
+
+    @staticmethod
+    def create_garden_network() -> None:
+        alice = GardenManager.create_garden("Alice")
+        thiago = GardenManager.create_garden("Thiago")
 
         alice.add_plant(Plant("Oak Tree", 100, 5))
         alice.add_plant(Flowering("Rose", 25, 2, "Red", True))
@@ -24,7 +28,7 @@ class GardenManager:
         thiago.add_plant(Plant("Oak", 70, 5))
 
     @staticmethod
-    def new_day():
+    def new_day() -> None:
         for garden in GardenManager.gardens:
             for plant in garden.plants:
                 plant.grow()
@@ -33,14 +37,14 @@ class GardenManager:
 
     class GardenStats:
         @staticmethod
-        def calculate_total_plants(garden):
+        def calculate_total_plants(garden) -> None:
             count = 0
             for plant in garden.plants:
                 count += 1
             print(f"Total plants in {garden.name}'s garden: {count}")
 
         @staticmethod
-        def average_age(garden):
+        def average_age(garden) -> None:
             total_age = 0
             count = 0
             average = 0
@@ -52,7 +56,7 @@ class GardenManager:
             print(f"Average age of the garden: {average}")
 
         @staticmethod
-        def plant_types(garden):
+        def plant_types(garden) -> None:
             r = 0
             f = 0
             p = 0
@@ -63,11 +67,13 @@ class GardenManager:
                     p += 1
                 else:
                     r += 1
-            print(f"Plant types: {r} regular, {f} flowering, "
-                  f"{p} prize flowers")
+            print(
+                f"Plant types: {r} regular, {f} flowering, "
+                f"{p} prize flowers"
+            )
 
         @staticmethod
-        def garden_score(garden):
+        def garden_score(garden) -> int:
             total = 0
             for plant in garden.plants:
                 if plant.plant_type() == "Prize":
@@ -75,7 +81,7 @@ class GardenManager:
             return total
 
         @staticmethod
-        def total_gardens():
+        def total_gardens() -> None:
             count = 0
             for garden in GardenManager.gardens:
                 count += 1
@@ -83,91 +89,113 @@ class GardenManager:
 
 
 class Plant:
-
-    def __init__(self, name, height, age):
-
+    def __init__(self, name: str, height: int, age: int) -> None:
         self.name = name
         self.__height = 0
         self.__age = 0
         self.set_height(height)
         self.set_age(age)
 
-    def get_height(self):
+    def get_height(self) -> int:
         return self.__height
 
-    def set_height(self, new_height):
+    def set_height(self, new_height: int) -> None:
         if new_height >= 0:
             self.__height = new_height
         else:
-            text = "\nInvalid operation attempted: " \
-                "height {new_height}cm [REJECTED]"
-            print(f"{text}")
+            print(
+                f"\nInvalid operation attempted: height "
+                f"{new_height}cm [REJECTED]"
+            )
             print("Security: Negative height rejected")
-            print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
-                  f"{self.get_age()} days)")
+            print(
+                f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
+                f"{self.get_age()} days)"
+            )
 
-    def get_age(self):
+    def get_age(self) -> int:
         return self.__age
 
-    def set_age(self, new_age):
+    def set_age(self, new_age: int) -> None:
         if new_age >= 0:
             self.__age = new_age
         else:
-            print(f"\nInvalid operation attempted: age {new_age} "
-                  "days [REJECTED]")
+            print(
+                f"\nInvalid operation attempted: age {new_age} "
+                "days [REJECTED]"
+            )
             print("Security: Negative age rejected")
-            print(f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
-                  f"{self.get_age()} days)")
+            print(
+                f"\nCurrent plant: {self.name} ({self.get_height()}cm, "
+                f"{self.get_age()} days)"
+            )
 
-    def grow(self):
+    def grow(self) -> None:
         self.__height += 1
 
-    def increase_age(self):
+    def increase_age(self) -> None:
         self.__age += 1
 
-    def plant_type(self):
-        return ("Regular")
+    def plant_type(self) -> str:
+        return "Regular"
 
-    def get_info(self):
-        print(f"{self.name} (Regular): {self.get_height()}cm, "
-              f"{self.get_age()} days")
+    def get_info(self) -> None:
+        print(
+            f"- {self.name} (Regular): {self.get_height()}cm, "
+            f"{self.get_age()} days"
+        )
 
 
 class Flowering(Plant):
-    def __init__(self, name, height, age, color, is_blooming):
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        color: str,
+        is_blooming: bool,
+    ) -> None:
         super().__init__(name, height, age)
         self.color = color
         self.is_blooming = False
 
-    def bloom(self):
+    def bloom(self) -> None:
         self.is_blooming = True
         print(f"{self.name} is blooming beautifully!")
 
-    def stop_bloom(self):
+    def stop_bloom(self) -> None:
         self.is_blooming = False
         print(f"{self.name} isn't blooming")
 
-    def blooming(self):
+    def blooming(self) -> str:
         if self.is_blooming:
-            return ("Blooming")
-        else:
-            return ("Not Blooming")
+            return "Blooming"
+        return "Not Blooming"
 
-    def plant_type(self):
-        return ("Flowering")
+    def plant_type(self) -> str:
+        return "Flowering"
 
-    def get_info(self):
-        print(f"{self.name} (Flowering): {self.get_height()}cm, "
-              f"{self.get_age()} days, {self.color} color "
-              f"({self.blooming()})")
+    def get_info(self) -> None:
+        print(
+            f"- {self.name} (Flowering): {self.get_height()}cm, "
+            f"{self.get_age()} days, {self.color} color "
+            f"({self.blooming()})"
+        )
 
 
 class PrizeFlower(Flowering):
-    def __init__(self, name, height, age, color, is_blooming):
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        color: str,
+        is_blooming: bool,
+    ) -> None:
         super().__init__(name, height, age, color, is_blooming)
         self.prize_points = self.calculate_prize()
 
-    def calculate_prize(self):
+    def calculate_prize(self) -> int:
         points = 0
         if self.is_blooming:
             points += 20
@@ -177,16 +205,18 @@ class PrizeFlower(Flowering):
             points += 20
         return points
 
-    def plant_type(self):
-        return ("Prize")
+    def plant_type(self) -> str:
+        return "Prize"
 
-    def get_info(self):
-        print(f"{self.name} (PrizeFlower): {self.get_height()}cm, "
-              f"{self.get_age()} days, {self.color} color "
-              f"({self.blooming()}), {self.prize_points} points")
+    def get_info(self) -> None:
+        print(
+            f"- {self.name} (PrizeFlower): {self.get_height()}cm, "
+            f"{self.get_age()} days, {self.color} color "
+            f"({self.blooming()}), {self.prize_points} points"
+        )
 
 
-def ft_garden_analytics():
+def ft_garden_analytics() -> None:
     print("=== Garden Management System Demo ===\n")
     garden_scores = {}
     GardenManager.create_garden_network()

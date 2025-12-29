@@ -1,24 +1,23 @@
 class Plant:
     plants = []
 
-    def __init__(self, name, height, age):
-
+    def __init__(self, name: str, height: int, age: int) -> None:
         self.name = name
         self.height = height
         self.age = age
         Plant.plants += [self]
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += 1
 
-    def increase_age(self):
+    def increase_age(self) -> None:
         self.age += 1
 
-    def get_info(self):
+    def get_info(self) -> None:
         print(f"{self.name}: {self.height}cm, {self.age} days old")
 
 
-def ft_plant_factory():
+def ft_plant_factory() -> None:
     plant_data = [
         {"name": "Rose", "height": 25, "age": 30},
         {"name": "Oak", "height": 200, "age": 365},
