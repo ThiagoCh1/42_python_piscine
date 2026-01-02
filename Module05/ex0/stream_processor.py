@@ -19,20 +19,29 @@ class NumericProcessor(DataProcessor):
     def process(self, data: Any) -> str:
         if not self.validate(data):
             return "Error in the validation"
+
         count = 0
         total = 0
         for num in data:
             count += 1
             total += num
-        avg = total / count
-        text = f"Processed {count} numeric values, sum={total}, avg={avg}"
-        return text
+
+        avg = 0.0
+        if count > 0:
+            avg = total / count
+
+        return f"Processed {count} numeric values, sum={total}, avg={avg}"
 
     def validate(self, data: Any) -> bool:
         if data is None:
             return False
-        if not data:
+        is_empty = True
+        for _ in data:
+            is_empty = False
+            break
+        if is_empty:
             return False
+
         for num in data:
             if type(num) is not int:
                 return False
@@ -46,15 +55,26 @@ class TextProcessor(DataProcessor):
     def process(self, data: Any) -> str:
         if not self.validate(data):
             return "Error in the validation"
-        count = len(data)
-        words = len(data.split())
-        text = f"Processed {count} characters, {words} words"
-        return text
+
+        char_count = 0
+        word_count = 0
+        in_word = False
+
+        for char in data:
+            char_count += 1
+            if char != ' ':
+                if not in_word:
+                    word_count += 1
+                    in_word = True
+            else:
+                in_word = False
+
+        return f"Processed {char_count} characters, {word_count} words"
 
     def validate(self, data: Any) -> bool:
         if data is None:
             return False
-        if not data:
+        if data == "":
             return False
         if type(data) is not str:
             return False
@@ -69,7 +89,23 @@ class LogProcessor(DataProcessor):
         if not self.validate(data):
             return "Error in the validation"
 
-        level, message = data.split(": ", 1)
+        level = ""
+        message = ""
+        temp_buffer = ""
+        found_split = False
+
+        for char in data:
+            if found_split:
+                message += char
+            else:
+                if char == ' ':
+                    if temp_buffer != "" and temp_buffer[-1] == ':':
+                        level = temp_buffer[:-1]
+                        found_split = True
+                    else:
+                        temp_buffer += char
+                else:
+                    temp_buffer += char
 
         if level == "ERROR":
             return f"[ALERT] ERROR level detected: {message}"
@@ -78,7 +114,7 @@ class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         if data is None:
             return False
-        if not data:
+        if data == "":
             return False
         if type(data) is not str:
             return False
@@ -138,9 +174,12 @@ def main() -> None:
         "INFO: System ready"
     ]
 
-    for i in range(len(processors)):
-        result = processors[i].process(data_list[i])
-        print("Result " + str(i + 1) + ": " + result)
+    idx = 0
+    for processor in processors:
+        current_data = data_list[idx]
+        result = processor.process(current_data)
+        print("Result " + str(idx + 1) + ": " + result)
+        idx += 1
 
 
 if __name__ == "__main__":
