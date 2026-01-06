@@ -6,6 +6,7 @@ class CardType(Enum):
     CREATURE = "Creature"
     SPELL = "Spell"
     ARTIFACT = "Artifacts"
+    ELITE = "Elite"
 
 
 class Card(ABC):
