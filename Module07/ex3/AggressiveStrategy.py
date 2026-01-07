@@ -1,5 +1,6 @@
 from ex3.GameStrategy import GameStrategy
 from ex1.SpellCard import SpellCard
+from ex0.CreatureCard import CreatureCard
 
 
 class AggressiveStrategy(GameStrategy):
@@ -10,10 +11,10 @@ class AggressiveStrategy(GameStrategy):
         actions: dict = {}
         for card in hand[:]:
             if card.cost <= 3:
-                card_played.append(card)
+                card_played.append(card.name)
                 if isinstance(card, SpellCard):
                     damage_dealt += card.damage
-                else:
+                elif isinstance(card, CreatureCard):
                     battlefield.append(card)
                 mana_used += card.cost
                 hand.remove(card)
