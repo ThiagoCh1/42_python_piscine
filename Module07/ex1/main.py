@@ -13,7 +13,8 @@ def main():
     dragon = CreatureCard("Fire Dragon", 7, "Legendary", 7, 5)
     crystal = ArtifactCard("Mana Crystal", 2, "Common", 10,
                            "Permanent: +1 mana per turn")
-    bolt = SpellCard("Lightning Bolt", 3, "Common", "Deal 3 damage to target")
+    bolt = SpellCard("Lightning Bolt", 3, "Common",
+                     "Deal 3 damage to target", 3)
 
     deck.add_card(dragon)
     deck.add_card(crystal)
