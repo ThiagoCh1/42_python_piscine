@@ -1,24 +1,30 @@
 class GardenError(Exception):
+    """Base class for all garden-related exceptions."""
     pass
 
 
 class PlantError(GardenError):
+    """Exception raised for plant-specific issues."""
     pass
 
 
 class WaterError(GardenError):
+    """Exception raised for water-supply issues."""
     pass
 
 
-def trigger_plant_problem():
+def trigger_plant_problem() -> None:
+    """Raise a PlantError to simulate a wilting plant."""
     raise PlantError("The tomato plant is wilting!")
 
 
-def trigger_water_problem():
+def trigger_water_problem() -> None:
+    """Raise a WaterError to simulate a water shortage."""
     raise WaterError("Not enough water in the tank!")
 
 
-def main():
+def main() -> None:
+    """Execute the custom error demonstration."""
     print("=== Custom Garden Errors Demo ===\n")
 
     print("Testing PlantError...")

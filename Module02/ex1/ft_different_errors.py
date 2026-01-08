@@ -1,5 +1,10 @@
-def garden_operations():
+def garden_operations() -> None:
+    """
+    Demonstrate various Python exception handling scenarios.
 
+    Simulates and catches ValueError, ZeroDivisionError, FileNotFoundError,
+    and KeyError to show how different errors are processed.
+    """
     print("Testing ValueError...")
     try:
         raise ValueError("abc")
@@ -34,7 +39,8 @@ def garden_operations():
         print("Caught an error, but program continues!\n")
 
 
-def test_error_types():
+def test_error_types() -> None:
+    """Run the garden operations error demonstration."""
     print("=== Garden Error Types Demo ===\n")
     garden_operations()
     print("All error types tested successfully!")
