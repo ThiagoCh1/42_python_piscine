@@ -1,14 +1,20 @@
-def main():
+def main() -> None:
+    """
+    Run the analytics dashboard using various Python comprehensions.
+
+    Demonstrates list, dictionary, and set comprehensions to filter,
+    transform, and analyze game data without traditional loops.
+    """
     print("=== Game Analytics Dashboard ===")
 
-    scores = {
+    scores: dict[str, int] = {
         "alice": 2300,
         "bob": 1800,
         "charlie": 2150,
         "diana": 2050
     }
 
-    sessions = [
+    sessions: list[dict] = [
         {"player": "alice", "mode": "ranked", "completed": True},
         {"player": "bob", "mode": "casual", "completed": True},
         {"player": "charlie", "mode": "competitive", "completed": False},
@@ -16,7 +22,7 @@ def main():
         {"player": "diana", "mode": "casual", "completed": True}
     ]
 
-    achievements = {
+    achievements: dict[str, set[str]] = {
         "alice": {
             "first_kill", "level_10", "treasure_hunter",
             "speed_demon", "boss_slayer"
@@ -35,33 +41,32 @@ def main():
         }
     }
 
-    regions = {
+    regions: dict[str, str] = {
         "alice": "north",
         "bob": "east",
         "charlie": "central",
         "diana": "east"
     }
 
-    print("=== List Comprehension Examples ===")
+    print("\n=== List Comprehension Examples ===")
 
-    high_scorers = [p for p in scores if scores[p] > 2000]
+    high_scorers: list[str] = [p for p in scores if scores[p] > 2000]
     print(f"High scorers (>2000): {high_scorers}")
 
-    doubled_scores = [scores[p] * 2 for p in scores]
+    doubled_scores: list[int] = [scores[p] * 2 for p in scores]
     print(f"Scores doubled: {doubled_scores}")
 
-    active_players = [
+    active_players: list[str] = sorted({
         s["player"] for s in sessions if s["completed"]
-    ]
-    active_players = sorted({p for p in active_players})
+    })
     print(f"Active players: {active_players}")
 
-    print("=== Dict Comprehension Examples ===")
+    print("\n=== Dict Comprehension Examples ===")
 
-    player_scores = {p: scores[p] for p in scores}
+    player_scores: dict[str, int] = {p: scores[p] for p in scores}
     print(f"Player scores: {player_scores}")
 
-    score_categories = {
+    score_categories: dict[str, int] = {
         "high": len([p for p in scores if scores[p] > 2000]),
         "medium": len([
             p for p in scores
@@ -71,40 +76,40 @@ def main():
     }
     print(f"Score categories: {score_categories}")
 
-    achievement_counts = {
+    achievement_counts: dict[str, int] = {
         p: len(achievements[p]) for p in achievements
     }
     print(f"Achievement counts: {achievement_counts}")
 
-    print("=== Set Comprehension Examples ===")
+    print("\n=== Set Comprehension Examples ===")
 
-    unique_players = {p for p in scores}
+    unique_players: set[str] = {p for p in scores}
     print(f"Unique players: {unique_players}")
 
-    unique_achievements = {
+    unique_achievements: set[str] = {
         a for p in achievements for a in achievements[p]
     }
     print(f"Unique achievements: {unique_achievements}")
 
-    active_regions = {
+    active_regions: set[str] = {
         regions[p] for p in regions if p in active_players
     }
     print(f"Active regions: {active_regions}")
 
-    print("=== Combined Analysis ===")
+    print("\n=== Combined Analysis ===")
 
-    total_players = len(unique_players)
+    total_players: int = len(unique_players)
     print(f"Total players: {total_players}")
 
-    total_ach = len(unique_achievements)
+    total_ach: int = len(unique_achievements)
     print(f"Total unique achievements: {total_ach}")
 
-    avg_score = sum(scores[p] for p in scores) / len(scores)
+    avg_score: float = sum(scores[p] for p in scores) / len(scores)
     print(f"Average score: {avg_score}")
 
-    top_player = max(scores, key=scores.get)
-    top_score = scores[top_player]
-    top_ach = len(achievements[top_player])
+    top_player: str = max(scores, key=scores.get)
+    top_score: int = scores[top_player]
+    top_ach: int = len(achievements[top_player])
 
     print(
         f"Top performer: {top_player} "

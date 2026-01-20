@@ -1,17 +1,24 @@
 import sys
 
 
-def main():
-    args = sys.argv[1:]
-    lent = len(args)
+def main() -> None:
+    """
+    Process player scores from command line arguments.
+
+    Collects scores, converts them to integers, and calculates statistics
+    including total count, sum, average, maximum, minimum, and range.
+    Handles invalid non-numeric input gracefully.
+    """
+    args: list = sys.argv[1:]
+    lent: int = len(args)
 
     if lent == 0:
         print("=== Player Score Analytics ===")
-        print("No scores provided. Usage:"
-              " python3 ft_score_analytics.py <score1> <score2> ...")
+        print("No scores provided. Usage: "
+              "python3 ft_score_analytics.py <score1> <score2> ...")
         return
 
-    i = 0
+    i: int = 0
     while i < lent:
         try:
             args[i] = int(args[i])

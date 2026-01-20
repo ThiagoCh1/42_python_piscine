@@ -1,8 +1,28 @@
-def next_seed(seed):
+def next_seed(seed: int) -> int:
+    """
+    Generate the next pseudo-random number using a Linear
+    Congruential Generator.
+
+    Args:
+        seed: The current seed integer.
+
+    Returns:
+        The updated seed integer.
+    """
     return (seed * 1103515245 + 12345) % 2147483648
 
 
-def events(n, levels):
+def events(n: int, levels: dict[str, int]):
+    """
+    Generate a stream of game events and update player levels in real-time.
+
+    Args:
+        n: The number of events to generate.
+        levels: A dictionary tracking the current level of each player.
+
+    Yields:
+        A formatted string describing the event (player, level, and action).
+    """
     players = ("alice", "bob", "charlie", "thiago")
     actions = ("killed monster", "found treasure", "leveled up")
     seed = 42
@@ -24,6 +44,12 @@ def events(n, levels):
 
 
 def fibonacci():
+    """
+    Generate an infinite sequence of Fibonacci numbers.
+
+    Yields:
+        The next number in the Fibonacci sequence.
+    """
     a = 0
     b = 1
     while True:
@@ -32,6 +58,12 @@ def fibonacci():
 
 
 def primes():
+    """
+    Generate an infinite sequence of prime numbers.
+
+    Yields:
+        The next prime number.
+    """
     n = 2
     while True:
         i = 2
@@ -46,7 +78,13 @@ def primes():
         n += 1
 
 
-def main():
+def main() -> None:
+    """
+    Execute the main event processing loop and demonstrate generator usage.
+
+    Processes a stream of game events, calculates analytics, and displays
+    examples of Fibonacci and Prime number generators.
+    """
     up_total = 0
     total_events = 0
     treasure = 0

@@ -1,17 +1,28 @@
-def achievements():
-    alice = {"first_kill", "level_10", "treasure_hunter", "speed_demon"}
+def achievements() -> None:
+    """
+    Track and analyze player achievements using set operations.
 
-    bob = {"first_kill", "level_10", "boss_slayer", "collector"}
-
-    charlie = {
-     "level_10",
-     "treasure_hunter",
-     "boss_slayer",
-     "speed_demon",
-     "perfectionist"
+    Stores unique achievements for multiple players, calculates statistics
+    like total unique achievements, and performs set comparisons to find
+    common, rare (unique to one player), and differential achievements.
+    """
+    alice: set[str] = {
+        "first_kill", "level_10", "treasure_hunter", "speed_demon"
     }
 
-    players = {
+    bob: set[str] = {
+        "first_kill", "level_10", "boss_slayer", "collector"
+    }
+
+    charlie: set[str] = {
+        "level_10",
+        "treasure_hunter",
+        "boss_slayer",
+        "speed_demon",
+        "perfectionist"
+    }
+
+    players: dict[str, set[str]] = {
         "alice": alice,
         "bob": bob,
         "charlie": charlie
@@ -22,22 +33,23 @@ def achievements():
         print(f"Player {name} achievements: {players[name]}")
 
     print("\n=== Achievement Analytics ===")
-    uniques = alice.union(bob).union(charlie)
+    uniques: set[str] = alice.union(bob).union(charlie)
     print(f"All unique achievements: {uniques}")
     print(f"Total unique achievements: {len(uniques)}\n")
 
-    common = alice.intersection(bob).intersection(charlie)
+    common: set[str] = alice.intersection(bob).intersection(charlie)
     print(f"Common to All players: {common}")
-    rare = alice.difference(bob).difference(charlie)
+
+    rare: set[str] = alice.difference(bob).difference(charlie)
     rare = rare.union(bob.difference(alice).difference(charlie))
     rare = rare.union(charlie.difference(alice).difference(bob))
     print(f"Rare achievements (1 player): {rare}\n")
 
-    ab = alice.intersection(bob)
+    ab: set[str] = alice.intersection(bob)
     print(f"Alice vs Bob common: {ab}")
-    aui = alice.difference(bob)
+    aui: set[str] = alice.difference(bob)
     print(f"Alice unique: {aui}")
-    bui = bob.difference(alice)
+    bui: set[str] = bob.difference(alice)
     print(f"Bob unique: {bui}")
 
 
